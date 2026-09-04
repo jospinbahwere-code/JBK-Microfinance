@@ -1,7 +1,7 @@
-import axios from "axios";
+﻿import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000"
+  baseURL: "https://jbk-microfinance-backend.onrender.com"
 });
 
 // Ajouter automatiquement le token JWT à chaque requête
