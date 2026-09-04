@@ -12,6 +12,7 @@ router.get("/", (req, res) => {
     SELECT
         credit.*,
         client.nom,
+        (credit.montant_rembourse / credit.duree) AS echeance_mensuelle,
 
         COALESCE(
             SUM(remboursement.montant),
@@ -191,7 +192,9 @@ router.post("/", (req, res) => {
 
                         message: "Crédit accordé avec succès",
 
-                        id_credit: result.insertId
+                        id_credit: result.insertId,
+                        montant_rembourse,
+                        echeance_mensuelle: montant_rembourse / Number(duree)
 
                     });
 

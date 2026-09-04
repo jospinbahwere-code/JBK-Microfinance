@@ -250,12 +250,9 @@ router.post("/", (req, res) => {
                         Number(compte.solde) - montantNumber;
 
 
-                    // Vérifier le solde minimum
+                    // Aucun découvert n'est autorisé.
 
-                    if (
-                        nouveauSolde <
-                        Number(compte.solde_minimum)
-                    ) {
+                    if (nouveauSolde < 0) {
 
                         return rollback(
                             "Solde insuffisant pour effectuer ce retrait"
@@ -359,12 +356,9 @@ router.post("/", (req, res) => {
                         Number(source.solde) - montantNumber;
 
 
-                    // Vérifier le solde minimum
+                    // Aucun découvert n'est autorisé.
 
-                    if (
-                        nouveauSolde <
-                        Number(source.solde_minimum)
-                    ) {
+                    if (nouveauSolde < 0) {
 
                         return rollback(
                             "Solde insuffisant pour effectuer ce virement"
