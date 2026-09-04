@@ -75,7 +75,7 @@ router.post("/login", (req, res) => {
                 role: utilisateur.role,
                 email: utilisateur.email
             },
-            "JBK_MICROFINANCE_SECRET_2026",
+            process.env.JWT_SECRET || "JBK_MICROFINANCE_SECRET_2026",
             {
                 expiresIn: "8h"
             }

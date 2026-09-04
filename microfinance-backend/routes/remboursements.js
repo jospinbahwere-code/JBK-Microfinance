@@ -12,12 +12,15 @@ router.get("/", (req, res) => {
         SELECT 
             remboursement.*,
             credit.montant AS montant_credit,
-            client.nom
+            client.nom,
+            utilisateur.nom AS nom_utilisateur
         FROM remboursement
         JOIN credit 
             ON remboursement.id_credit = credit.id_credit
         JOIN client
             ON credit.id_client = client.id_client
+        LEFT JOIN utilisateur
+            ON remboursement.id_utilisateur = utilisateur.id_utilisateur
         ORDER BY remboursement.date_remboursement DESC
     `;
 
@@ -153,6 +156,18 @@ router.post("/", (req, res) => {
 
                     const dejaPaye =
                         Number(result[0].total_paye);
+
+                    const resteAvantPaiement = montantTotal - dejaPaye;
+                    const mensualite = Math.min(
+                        montantTotal / Number(credit.duree),
+                        resteAvantPaiement
+                    );
+
+                    if (Math.abs(Number(montant) - mensualite) > 0.01) {
+                        return res.status(400).json({
+                            message: `La mensualité attendue est de ${mensualite.toFixed(2)} CDF`
+                        });
+                    }
 
 
                     const nouveauTotal =

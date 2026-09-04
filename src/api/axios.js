@@ -4,10 +4,8 @@ const api = axios.create({
   baseURL: "https://jbk-microfinance-backend.onrender.com"
 });
 
-// Ajouter automatiquement le token JWT à chaque requête
 api.interceptors.request.use(
   (config) => {
-
     const token = localStorage.getItem("jbk_token");
 
     if (token) {
@@ -16,7 +14,6 @@ api.interceptors.request.use(
 
     return config;
   },
-
   (error) => {
     return Promise.reject(error);
   }

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const SECRET = "JBK_MICROFINANCE_SECRET_2026";
+const SECRET = process.env.JWT_SECRET || "JBK_MICROFINANCE_SECRET_2026";
 
 function verifierToken(req, res, next) {
 
